@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Frames</title>
+    <link rel="icon" href="./favicon.ico" sizes="32x32" type="image/x-icon" /> <!-- Иконка на вкладке, use "type" - image/png image/svg image/x-icon Размер: 16х16 32х32 180х180 -->
+    <meta http-equiv="Permissions-Policy" content="web-share=*;" />
+    <meta name="referrer" content="unsafe-url" />
+    <!-- Use one of this: no-referrer / no-referrer-when-downgrade / origin / origin-when-cross-origin / same-origin / strict-origin / strict-origin-when-cross-origin / unsafe-url  -->
+    <link rel="canonical" href="https://./" /> <!-- Detect basic page for search sites -->
+    <meta name="description" content="ascii, frames, js, test"> <!-- Show description page in search sites -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@1.1.0/modern-normalize.min.css">
+    <style>
+        :root {
+            --background: #101010; /* Default value: #101010 */
+            --color: #07b307; /* Default value: #07b307 */
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--color);
+        }
+
+        p {
+            font-family: 'Arial';
+            display: block;
+            text-align: center;
+            margin: 12px auto;
+            font-size: 14px;
+        }
+
+        pre {
+            display: block;
+            text-align: center;
+            margin: 12px auto;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <p>██████████ Frames JS (Test) | 
+        <a href="" style="color: inherit;">REFRESH PAGE ↩</a> | Made by Anatolii Ovcharuk - 
+        <a href="https://github.com/Anatolii-Ovcharuk" target="_blank" style="color: inherit;">https://github.com/Anatolii-Ovcharuk</a> 
+    ██████████</p>
+    <pre id="ascii"></pre>
+</body>
+<!-- <script src="./frames.js" type="module"></script> -->
+<script type="module">
+    /* ██████████ Frames JS (Runner) | Made by Anatolii Ovcharuk - https://github.com/Anatolii-Ovcharuk ██████████ */
+
+    /* Options */
+    const DEFAULT_TIME_CHANGE_FRAME = 100; /* Time to change next frame. Default value (numbers): 100 */
+    const DEFAULT_USE_FIX_REGISTER = false; /* Set all register to lowercase. Values: true/false. */
+    const SHOW_IN_CONSOLE = false; /* Show frame in browser console. Values: true/false. */
+    const NAME_HTML_ELEMENT = "ascii"; /* Set id name for show frame in HTML Element. Values: true/false. */
+
+    /* Runner */
+    const names = prompt('Entry frame name:');
+    const element = document.getElementById(NAME_HTML_ELEMENT);
+    if (!names || names === null || names === " ") {
+        const message = "Name frame is not set. Aborted running.";
+        console.warn(message);
+        if (element) {
+            element.innerText = message;
+        };
+    } else {
+        import(`./frames/${DEFAULT_USE_FIX_REGISTER ? names.toLocaleLowerCase() : names}.js`).then(module => {
+            const frames = module.default;
+            let index = 0;
+            function updateFrame() {
+                if (element) {
+                    element.innerText = frames[index];
+                };
+                if (SHOW_IN_CONSOLE) {
+                    console.log(frames[index])
+                };
+                index = (index + 1) % frames.length;
+            }
+
+            setInterval(() => {
+                if (SHOW_IN_CONSOLE) {
+                    console.clear()
+                };
+                updateFrame();
+            }, DEFAULT_TIME_CHANGE_FRAME);
+        }).catch(error => {
+            console.error("Failed to load module:", error);
+            if (element) {
+                element.innerText = error.message;
+            };
+        });
+    };
+</script>
+</html>
