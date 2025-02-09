@@ -1,4 +1,4 @@
-/* ██████████ Frames JS (Runner) | Made by Anatolii Ovcharuk - https://github.com/Anatolii-Ovcharuk ██████████ */
+/* ██████████ Frames JS (Runner) | MIT License | Made by Anatolii Ovcharuk - https://github.com/Anatolii-Ovcharuk ██████████ */
 
 /* INSTALLATION */
 /* Add in HTML page next: <script src="./frames.js" type="module"></script> */
